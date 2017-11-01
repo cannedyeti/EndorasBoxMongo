@@ -1,4 +1,4 @@
-var app = angular.module('App', ['ui.router']);
+var app = angular.module('App', ['ui.router', 'AuthCtrls']);
 
 app.config([
   '$stateProvider',
@@ -11,6 +11,19 @@ app.config([
       url: '/',
       templateUrl: 'app/views/home.html',
     })
+    .state('login', {
+      url: '/login',
+      templateUrl: 'app/views/login.html',
+      controller: 'LoginCtrl'
+    })
+    .state('signup', {
+      url: '/signup',
+      templateUrl: 'app/views/signup.html',
+      controller: 'SignupCtrl'
+    })
 
     $locationProvider.html5Mode(true);
+  }])
+  .config(["$httpProvider", function($httpProvider){
+    $httpProvider.interceptors.push("AuthInterceptor");
   }]);
